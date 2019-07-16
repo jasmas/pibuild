@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+    pibuild:
+        build:
+            context: .
+        image: pibuild
+        container_name: 'pibuild'
+        volumes:
+            - ./root:/root
+        env_file:
+            - ./pi.env  # For Pi 1, Pi Zero, Pi Zero W, or Compute Module
+#           - ./pi3.env # For Pi 2, Pi 3, Pi 3+, or Compute Module 3
+#           - ./pi4.env # For Raspberry Pi 4
+        environment:
+            ALL: zImage modules dtbs
+            ARCH: arm
+            CROSS_COMPILE: arm-linux-gnueabihf-
+            PISOURCE: https://github.com/raspberrypi/linux
+        entrypoint: /bin/bash
